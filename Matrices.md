@@ -110,3 +110,40 @@ $$
 
 where $x_2$ is any real number.
 
+### Matrix Multiplication
+
+If $A$ is an $m \times n$ matrix and $B$ is an $n \times p$ matrix, the matrix product $C = AB$ (denoted without multiplication signs or dots) is defined to be the $m \times p$ matrix such that 
+$c_{ij}=a_{i1}b_{1j}+a_{i2}b_{2j}+\ldots+a_{in}b_{nj}=\sum_{k=1}^{n} a_{ik}b_{kj}, \tag{4}$
+
+where $a_{ik}$ are the elements of matrix $A$, $b_{kj}$ are the elements of matrix $B$, and $i = 1, \ldots, m$, $k=1, \ldots, n$, $j = 1, \ldots, p$. In other words, $c_{ij}$ is the dot product of the $i$-th row of $A$ and the $j$-th column of $B$.
+
+#### Matrix Multiplication using Python
+
+Like with the dot product, there are a few ways to perform matrix multiplication in Python. As discussed in the previous lab, the calculations are more efficient in the vectorized form. Let's discuss the most commonly used functions in the vectorized form.
+
+You can multiply matrices $A$ and $B$ using `NumPy` package function `np.matmul()`. Which will output matrix as a `np.array`. Python operator `@` will also work here giving the same result. 
+
+#### Matrix Convention and Broadcasting
+
+Mathematically, matrix multiplication is defined only if number of the columns of matrix $A$ is equal to the number of the rows of matrix $B$.
+
+Thus, changing the order of matrices when performing the multiplication $BA$ will not work as the above rule does not hold anymore. 
+
+So when using matrix multiplication you will need to be very careful about the dimensions - the number of the columns in the first matrix should match the number of the rows in the second matrix. This is very important for your future understanding of Neural Networks and how they work. 
+
+However, for multiplying of the vectors, `NumPy` has a shortcut. You can define two vectors $x$ and $y$ of the same size (which one can understand as two $3 \times 1$ matrices). 
+
+Following the matrix convention, multiplication of matrices $3 \times 1$ and $3 \times 1$ is not defined.You will see that there is no error and that the result is actually a dot product $x \cdot y\,$! So, vector $x$ was automatically transposed into the vector $1 \times 3$ and matrix multiplication $x^Ty$ was calculated. While this is very convenient, you need to keep in mind such functionality in Python and pay attention to not use it in a wrong way.
+
+You might have a question in you mind: does `np.dot()` function also work for matrix multiplication?
+
+Yes, it works! What actually happens is what is called **broadcasting** in Python: `NumPy` broadcasts this dot product operation to all rows and all columns, you get the resultant product matrix. Broadcasting also works in other cases, for example, subtracting a scalar unit from a matrix, such as: 
+$$
+\begin{bmatrix}
+-1 & 3\\
+3 & 2
+\end{bmatrix}
+- 2
+$$
+
+Mathematically, subtraction of the $3 \times 3$ matrix $A$ and a scalar is not defined, but Python broadcasts the scalar, creating a $3 \times 3$ `np.array` and performing subtraction element by element. A practical example of matrix multiplication can be seen in a linear regression model.

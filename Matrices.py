@@ -92,3 +92,52 @@ print(f"Determinant of matrix A3: {d3:.2f}")
 
 # plot lines for the system with infinite solutions
 plot_lines(A3)
+# -------------------------------------------------------------------------------
+# Matrix Multiplication
+
+A = np.array([[4, 9, 9], [9, 1, 6], [9, 2, 3]])
+print("Matrix A (3 by 3):\n", A)
+
+B = np.array([[2, 2], [5, 7], [4, 4]])
+print("Matrix B (3 by 2):\n", B)
+
+# using matmul to multiply
+np.matmul(A, B)
+# or
+A @ B
+# -------------------------------------------------------------------------------
+#Matrix Convention and Broadcasting
+try:
+    np.matmul(B, A)
+except ValueError as err:
+    print(err) # this will raise an error because the inner dimensions do not match for matrix multiplication.
+
+try:
+    B @ A
+except ValueError as err:
+    print(err) # this will raise an error because the inner dimensions do not match for matrix multiplication.
+
+# checking vector shape
+x = np.array([1, -2, -5])
+y = np.array([4, 3, -1])
+
+print("Shape of vector x:", x.shape)
+print("Number of dimensions of vector x:", x.ndim)
+print("Shape of vector x, reshaped to a matrix:", x.reshape((3, 1)).shape)
+print("Number of dimensions of vector x, reshaped to a matrix:", x.reshape((3, 1)).ndim)
+
+np.matmul(x,y) # this is the dot product of x and y, which is a scalar value.
+
+# if we want to perform matrix multiplication, we need to reshape the vectors to be 2D matrices.
+try:
+    np.matmul(x.reshape((3, 1)), y.reshape((3, 1)))
+except ValueError as err:
+    print(err) 
+    # this will raise an error because the inner dimensions do not match for matrix multiplication.
+
+# What about np.dot?
+np.dot(A, B)
+# This broadcasts the dot product operation to all rows and all columns, to get the resultant product matrix.
+
+# it also allows for subtraction using a scalar value.
+A - 2
